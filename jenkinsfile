@@ -21,7 +21,7 @@ node
    }
   
   stage('tomcat') {
-	docker stop $(docker ps -a -q --filter ancestor=tomcat)
+	docker rmi $(docker ps -a -q --filter ancestor=tomcat)
         docker build -t tomcat -f docker
         docker run --rm -d -p 8084:8080 tomcat
 
