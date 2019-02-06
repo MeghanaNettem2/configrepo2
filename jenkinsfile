@@ -21,19 +21,10 @@ node
    }
   
   stage('tomcat') {
-	def Install = false;
-	try {
-		input message: 'Install?', ok: 'Install'
-		Install = true
-		} catch (err) {
-	Install = false
-	
-	}
-	
-       if (Install){   
-	 
-	  sh "docker run -d --name tom -p 9001:8080 tomcat"
-        }
+	docker stop $(docker ps -a -q --filter ancestor=tomcat)
+        docker build -t tomcat -f util_repo/docker/dockerfile .
+        docker run --rm -d -p 8084:8080 tomcat
+
     }	
     stage('sucess')
     {
