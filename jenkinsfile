@@ -21,9 +21,9 @@ node
    }
   
   stage('tomcat') {
-	
-        docker build -t tomcat -f docker
-        docker run --rm -d -p 8084:8080 tomcat
+	sh "docker stop $(docker ps -a -q --filter ancestor=tomcat)"
+        sh "docker build -t tomcat -f docker"
+        sh "docker run --rm -d -p 8084:8080 tomcat"
 
     }	
     stage('sucess')
